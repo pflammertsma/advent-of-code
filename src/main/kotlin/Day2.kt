@@ -1,68 +1,52 @@
-#!/usr/bin/env kotlin
-
-import java.io.File
-
-class Day2(private val input: MutableList<String>) {
+class Day2 {
 
   var depth = 0
   var x = 0
   var aim = 0
 
-  private fun reset() {
-    depth = 0
-    x = 0
-    aim = 0
-  }
-
-  fun traverse() {
-    reset()
-    input.forEach {
-      it.split(' ').zipWithNext { action, distance ->
-        when (action) {
-          "forward" -> x += distance.toInt()
-          "down" -> depth += distance.toInt()
-          "up" -> depth -= distance.toInt()
-          else -> throw IllegalArgumentException("Unknown action '$action'")
-        }
+  fun traverse(input: List<String>) {
+    input.forEachAction { action, amount ->
+      when (action) {
+        "forward" -> x += amount
+        "down" -> depth += amount
+        "up" -> depth -= amount
+        else -> throw IllegalArgumentException("Unknown action '$action'")
       }
+      if (depth < 0) throw IllegalStateException("Above water")
     }
   }
 
-  fun aimedTraverse() {
-    reset()
-    input.forEach {
-      it.split(' ').zipWithNext { action, amount ->
-        when (action) {
-          "forward" -> {
-            x += amount.toInt()
-            depth += aim * amount.toInt()
-          }
-          "down" -> {
-            aim += amount.toInt()
-          }
-          "up" -> {
-            aim -= amount.toInt()
-          }
-          else -> {
-            throw IllegalArgumentException("Unknown action '$action'")
-          }
+  fun aimedTraverse(input: List<String>) {
+    input.forEachAction { action, amount ->
+      when (action) {
+        "forward" -> {
+          x += amount
+          depth += aim * amount
         }
+        "down" -> aim += amount
+        "up" -> aim -= amount
+        else -> throw IllegalArgumentException("Unknown action '$action'")
       }
+      if (depth < 0) throw IllegalStateException("Above water")
     }
   }
 }
 
-fun main() {
-  val list = mutableListOf<String>().also { list ->
-    File("resources/day2.txt").forEachLine {
-      list.add(it)
-    }
+private fun List<String>.forEachAction(predicate: (String, Int) -> Any) {
+  forEach {
+    it.split(' ').let { predicate(it[0], it[1].toInt()) }
   }
-  Day2(list).apply {
-    traverse()
-    println("part1: horizontal position: $x; depth: $depth; product: ${x * depth}")
+}
 
-    aimedTraverse()
-    println("part2: horizontal position: $x; depth: $depth; product: ${x * depth}")
+fun main() {
+  readInput("day2").let { input ->
+    Day2().apply {
+      traverse(input)
+      println("part1: horizontal position: $x; depth: $depth; product: ${x * depth}")
+    }
+    Day2().apply {
+      aimedTraverse(input)
+      println("part2: horizontal position: $x; depth: $depth; product: ${x * depth}")
+    }
   }
 }

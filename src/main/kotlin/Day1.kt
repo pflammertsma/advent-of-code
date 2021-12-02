@@ -1,27 +1,22 @@
-#!/usr/bin/env kotlin
+class Day1 {
 
-import java.io.File
-
-class Day1(private val input: MutableList<Int>) {
-
-  fun increments(): Int {
+  fun increments(input: List<Int>): Int {
     return input.zipWithNext { a, b -> if (b > a) 1 else 0 }.sum()
   }
 
-  fun windowedIncrements(): Int {
+  fun windowedIncrements(input: List<Int>): Int {
     return input.windowed(3).map { it.sum() }.zipWithNext { a, b -> if (b > a) 1 else 0 }.sum()
   }
 
 }
 
 fun main() {
-  val input = mutableListOf<Int>().also { list ->
-    File("resources/day1.txt").forEachLine {
-      list.add(it.toInt())
+  readInput("day1").map { it.toInt() }.let { input ->
+    Day1().apply {
+      println("total immediate increments: ${increments(input)}")
     }
-  }
-  Day1(input).apply {
-    println("total immediate increments: ${increments()}")
-    println("total windowed increments: ${windowedIncrements()}")
+    Day1().apply {
+      println("total windowed increments: ${windowedIncrements(input)}")
+    }
   }
 }

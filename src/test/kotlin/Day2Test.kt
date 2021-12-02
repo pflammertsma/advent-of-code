@@ -3,20 +3,23 @@ import org.junit.Test
 
 class Day2Test {
 
-  private val obj = Day2(
+  private val input =
     mutableListOf("forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2")
-  )
 
   @Test
   fun testPart1() {
-    obj.traverse()
-    assertEquals(150, obj.x * obj.depth)
+    Day2().apply {
+      traverse(input)
+      assertEquals(150, x * depth)
+    }
   }
 
   @Test
   fun testPart2() {
-    obj.aimedTraverse()
-    assertEquals(900, obj.x * obj.depth)
+    Day2().apply {
+      aimedTraverse(input)
+      assertEquals(900, x * depth)
+    }
   }
 
 }
