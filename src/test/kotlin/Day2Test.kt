@@ -16,8 +16,8 @@ class Day2Test {
 
   @Test
   fun testPart2() {
-    Day2().apply {
-      aimedTraverse(input)
+    Day2v2().apply {
+      traverse(input)
       assertEquals(900, x * depth)
     }
   }

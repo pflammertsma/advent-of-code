@@ -1,35 +1,51 @@
-class Day2 {
+open class Day2 {
 
   var depth = 0
   var x = 0
+
+  open fun traverse(input: List<String>) {
+    input.forEachAction { action, amount ->
+      when (action) {
+        "forward" -> goForward(amount)
+        "down" -> goDown(amount)
+        "up" -> goUp(amount)
+        else -> throw IllegalArgumentException("Unknown action '$action'")
+      }
+      if (depth < 0) throw IllegalStateException("Above water")
+    }
+  }
+
+  protected open fun goForward(amount: Int) {
+    x += amount
+  }
+
+  protected open fun goDown(amount: Int) {
+    depth += amount
+  }
+
+  protected open fun goUp(amount: Int) {
+    depth -= amount
+  }
+
+}
+
+class Day2v2 : Day2() {
+
   var aim = 0
 
-  fun traverse(input: List<String>) {
-    input.forEachAction { action, amount ->
-      when (action) {
-        "forward" -> x += amount
-        "down" -> depth += amount
-        "up" -> depth -= amount
-        else -> throw IllegalArgumentException("Unknown action '$action'")
-      }
-      if (depth < 0) throw IllegalStateException("Above water")
-    }
+  override fun goForward(amount: Int) {
+    x += amount
+    depth += aim * amount
   }
 
-  fun aimedTraverse(input: List<String>) {
-    input.forEachAction { action, amount ->
-      when (action) {
-        "forward" -> {
-          x += amount
-          depth += aim * amount
-        }
-        "down" -> aim += amount
-        "up" -> aim -= amount
-        else -> throw IllegalArgumentException("Unknown action '$action'")
-      }
-      if (depth < 0) throw IllegalStateException("Above water")
-    }
+  override fun goDown(amount: Int) {
+    aim += amount
   }
+
+  override fun goUp(amount: Int) {
+    aim -= amount
+  }
+
 }
 
 private fun List<String>.forEachAction(predicate: (String, Int) -> Any) {
@@ -44,8 +60,8 @@ fun main() {
       traverse(input)
       println("part1: horizontal position: $x; depth: $depth; product: ${x * depth}")
     }
-    Day2().apply {
-      aimedTraverse(input)
+    Day2v2().apply {
+      traverse(input)
       println("part2: horizontal position: $x; depth: $depth; product: ${x * depth}")
     }
   }
