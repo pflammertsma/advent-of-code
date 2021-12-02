@@ -8,7 +8,7 @@ class Day2Test {
 
   @Test
   fun testPart1() {
-    Day2().apply {
+    Day2.V1().apply {
       traverse(input)
       assertEquals(150, x * depth)
     }
@@ -16,7 +16,7 @@ class Day2Test {
 
   @Test
   fun testPart2() {
-    Day2v2().apply {
+    Day2.V2().apply {
       traverse(input)
       assertEquals(900, x * depth)
     }

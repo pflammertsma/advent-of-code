@@ -1,4 +1,4 @@
-open class Day2 {
+sealed class Day2 {
 
   var depth = 0
   var x = 0
@@ -15,35 +15,43 @@ open class Day2 {
     }
   }
 
-  protected open fun goForward(amount: Int) {
-    x += amount
+  abstract fun goForward(amount: Int)
+  abstract fun goDown(amount: Int)
+  abstract fun goUp(amount: Int)
+
+  class V1 : Day2() {
+
+    override fun goForward(amount: Int) {
+      x += amount
+    }
+
+    override fun goDown(amount: Int) {
+      depth += amount
+    }
+
+    override fun goUp(amount: Int) {
+      depth -= amount
+    }
+
   }
 
-  protected open fun goDown(amount: Int) {
-    depth += amount
-  }
+  class V2 : Day2() {
 
-  protected open fun goUp(amount: Int) {
-    depth -= amount
-  }
+    var aim = 0
 
-}
+    override fun goForward(amount: Int) {
+      x += amount
+      depth += aim * amount
+    }
 
-class Day2v2 : Day2() {
+    override fun goDown(amount: Int) {
+      aim += amount
+    }
 
-  var aim = 0
+    override fun goUp(amount: Int) {
+      aim -= amount
+    }
 
-  override fun goForward(amount: Int) {
-    x += amount
-    depth += aim * amount
-  }
-
-  override fun goDown(amount: Int) {
-    aim += amount
-  }
-
-  override fun goUp(amount: Int) {
-    aim -= amount
   }
 
 }
@@ -56,11 +64,11 @@ private fun List<String>.forEachAction(predicate: (String, Int) -> Any) {
 
 fun main() {
   readInput("day2").let { input ->
-    Day2().apply {
+    Day2.V1().apply {
       traverse(input)
       println("part1: horizontal position: $x; depth: $depth; product: ${x * depth}")
     }
-    Day2v2().apply {
+    Day2.V2().apply {
       traverse(input)
       println("part2: horizontal position: $x; depth: $depth; product: ${x * depth}")
     }
