@@ -12,9 +12,11 @@ class Day1 {
 
 fun main() {
   readInput("day1").map { it.toInt() }.let { input ->
+    println("\nPART 1")
     Day1().apply {
       println("total immediate increments: ${increments(input)}")
     }
+    println("\nPART 2")
     Day1().apply {
       println("total windowed increments: ${windowedIncrements(input)}")
     }

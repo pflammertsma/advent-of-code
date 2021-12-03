@@ -64,10 +64,12 @@ private fun List<String>.forEachAction(predicate: (String, Int) -> Any) {
 
 fun main() {
   readInput("day2").let { input ->
+    println("\nPART 1")
     Day2.V1().apply {
       traverse(input)
       println("part1: horizontal position: $x; depth: $depth; product: ${x * depth}")
     }
+    println("\nPART 2")
     Day2.V2().apply {
       traverse(input)
       println("part2: horizontal position: $x; depth: $depth; product: ${x * depth}")
