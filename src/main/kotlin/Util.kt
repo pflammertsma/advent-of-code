@@ -22,3 +22,9 @@ fun <E> MutableList<E>.replaceIf(predicate: (E) -> E) {
     set(i, predicate(get(i)))
   }
 }
+
+fun String.splitTo(s: String, predicate: (left: String, right: String) -> Unit) =
+  split(s).pair(predicate)
+
+fun <E> List<E>.pair(predicate: (left: E, right: E) -> Unit) =
+  predicate(this[0], this[1])
