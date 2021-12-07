@@ -9,8 +9,8 @@ class Day6 {
     if (print) println("Grouped by age: ${ages.contentToString()}")
     for (day in 1..days) {
       val newAges = Array<Long>(9) { 0 }
-      newAges[6] += ages[0]
-      newAges[8] += ages[0]
+      newAges[6] = ages[0]
+      newAges[8] = ages[0]
       for (i in 1..8) {
         newAges[i - 1] += ages[i]
       }
