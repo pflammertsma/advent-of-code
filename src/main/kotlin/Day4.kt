@@ -10,7 +10,7 @@ class Day4 {
 
     init {
       input.toMutableList().apply {
-        numbers = removeFirst().split(",").map { it.toInt() }.toMutableList()
+        numbers = toInts().toMutableList()
         var id = 0
         while (size > 5) {
           removeFirst()

@@ -1,6 +1,9 @@
 import java.io.File
+import kotlin.math.absoluteValue
 
 fun readInput(filename: String) = File("resources/$filename.txt").readLines()
+
+fun List<String>.toInts() = first().split(",").map { it.toInt() }
 
 fun Char.toNumber() =
   this - '0'
@@ -28,3 +31,6 @@ fun String.splitTo(s: String, predicate: (left: String, right: String) -> Unit) 
 
 fun <E> List<E>.pair(predicate: (left: E, right: E) -> Unit) =
   predicate(this[0], this[1])
+
+val Int.divergentSeries: Int
+  get() = (this * (this + 1)) / 2
