@@ -34,3 +34,6 @@ fun <E> List<E>.pair(predicate: (left: E, right: E) -> Unit) =
 
 val Int.divergentSeries: Int
   get() = (this * (this + 1)) / 2
+
+fun String.sort() =
+  StringBuilder().also { sb -> chars().sorted().forEach { sb.append(it.toChar()) } }.toString()
