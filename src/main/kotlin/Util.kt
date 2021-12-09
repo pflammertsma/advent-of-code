@@ -37,3 +37,18 @@ val Int.divergentSeries: Int
 
 fun String.sort() =
   StringBuilder().also { sb -> chars().sorted().forEach { sb.append(it.toChar()) } }.toString()
+
+fun <E> Array<Array<E>>.print() = forEach { row ->
+  row.forEach { value ->
+    print(value)
+  }
+  println()
+}
+
+fun Collection<Int>.product(): Int {
+  var product = 1
+  forEach {
+    product *= it
+  }
+  return product
+}
