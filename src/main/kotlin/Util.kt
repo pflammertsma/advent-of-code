@@ -52,3 +52,5 @@ fun Collection<Int>.product(): Int {
   }
   return product
 }
+
+fun String.capitalized() = all { c -> c in 'A'..'Z' }
