@@ -54,3 +54,12 @@ fun Collection<Int>.product(): Int {
 }
 
 fun String.capitalized() = all { c -> c in 'A'..'Z' }
+
+inline fun <T> Iterable<T>.takeAll(predicate: (T) -> Boolean): List<T> {
+  val list = ArrayList<T>()
+  for (item in this) {
+    if (predicate(item))
+      list.add(item)
+  }
+  return list
+}
